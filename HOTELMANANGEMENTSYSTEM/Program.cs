@@ -40,7 +40,8 @@ namespace HotelManagementSystem
                 Console.WriteLine("2. Book Room");
                 Console.WriteLine("3. Check Out");
                 Console.WriteLine("4. View All Bookings");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Search Guest");   // NEW OPTION
+                Console.WriteLine("6. Exit");
                 Console.Write("Option: ");
 
                 switch (Console.ReadLine())
@@ -58,6 +59,9 @@ namespace HotelManagementSystem
                         ViewBookings(rooms);
                         break;
                     case "5":
+                        SearchGuest(rooms); // NEW FUNCTION CALL
+                        break;
+                    case "6":
                         running = false;
                         break;
                     default:
@@ -165,6 +169,32 @@ namespace HotelManagementSystem
             }
 
             if (!any) Console.WriteLine("No active bookings.");
+            Console.ReadLine();
+        }
+
+        // ---------------------------
+        // NEW FUNCTION: Search Guest
+        // ---------------------------
+        static void SearchGuest(List<Room> rooms)
+        {
+            Console.Clear();
+            Console.WriteLine("=== SEARCH GUEST ===");
+            Console.Write("Enter guest name: ");
+            string name = Console.ReadLine().ToLower();
+
+            bool found = false;
+
+            foreach (Room room in rooms)
+            {
+                if (room.IsBooked && room.GuestName.ToLower().Contains(name))
+                {
+                    Console.WriteLine($"{room.GuestName} is in Room {room.Number}");
+                    found = true;
+                }
+            }
+
+            if (!found) Console.WriteLine("Guest not found.");
+
             Console.ReadLine();
         }
     }
